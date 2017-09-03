@@ -48,7 +48,14 @@ class OpenGLVertexArrayObject {
 				glBindBuffer(GL_ARRAY_BUFFER, vbo[i]);
 				glEnableVertexAttribArray(i);
 			}
-			// todo index buffer
+
+			// generate index arrays
+			glGenBuffers(CountIndexBuffer, iab);
+
+			/*
+			for (size_t i = 0; i < CountIndexBuffer; ++i) {
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vab[i]);
+			}*/
 
 			glBindVertexArray(0);
 		};
@@ -84,6 +91,12 @@ class OpenGLVertexArrayObject {
 			glBindBuffer(GL_ARRAY_BUFFER, vbo[index]);
 
 			glBufferData(GL_ARRAY_BUFFER, size, data, GLenum(usage));
+		}
+
+		void uploadIndexData(size_t index, size_t size, const void* data, VertexUsage usage) {
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iab[index]);
+
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GLenum(usage));
 		}
 };
 
