@@ -66,6 +66,11 @@ class OpenGLShader {
 		OpenGLShader() :
 			prog(0) {}
 
+		~OpenGLShader() {
+			if (prog)
+				deleteShader();
+		}
+
 		bool compileAndLink(const char* src_vertex, const char* src_fragment);
 		bool compileAndLink(const char* src_vertex, const char* src_geom, const char* src_fragment);
 
@@ -76,6 +81,11 @@ class OpenGLShader {
 
 		bool compileAndLinkTransformFeedbackFiles(const char* vertexFile, const std::vector<const char*>& outputVars, TransformFeedbackOutput output);
 		bool compileAndLinkTransformFeedbackFiles(const char* vertexFile, const char* geomFile, const std::vector<const char*>& outputVars, TransformFeedbackOutput output);
+
+		void deleteShader() {
+			glDeleteShader(prog);
+			prog = 0;
+		}
 
 		GLuint get() const {
 			return prog;
@@ -109,6 +119,10 @@ class OpenGLShader {
 		}
 		void setUniform(const char* name, int v0, int v1) {
 			glUniform2i(glGetUniformLocation(prog, name), v0, v1);
+		}
+
+		void swap(OpenGLShader& other) {
+			std::swap(prog, other.prog);
 		}
 };
 
