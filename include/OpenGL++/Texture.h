@@ -62,17 +62,11 @@ class OpenGLTexture {
 		GLuint tex;
 		TextureTarget target;
 
+		OpenGLTexture& operator=(const OpenGLTexture&);
+		OpenGLTexture(const OpenGLTexture&);
+
 	public:
 		OpenGLTexture(TextureTarget target) : tex(0), target(target) {
-			glGenTextures(1, &tex);
-		}
-
-		OpenGLTexture operator=(const OpenGLTexture& other) {
-			return OpenGLTexture(other.target);
-		}
-
-		// special copy constructor -> creates a new OpenGL texture
-		OpenGLTexture(const OpenGLTexture& other) : tex(0), target(other.target) {
 			glGenTextures(1, &tex);
 		}
 
@@ -93,8 +87,17 @@ class OpenGLTexture {
 			glBindTexture(GLenum(target), 0);
 		}
 
+		void uploadData1D(GLint mipLevel, TextureInternalFormat internalFormat, GLsizei width, TextureFormat dataFormat, TextureFormatType dataType, const void* data) {
+			glTexImage1D(target, mipLevel, GLenum(internalFormat), width, 0, GLenum(dataFormat), GLenum(dataType), data);
+		}
+
+		void uploadData2D(GLint mipLevel, TextureInternalFormat internalFormat, GLsizei width, GLsizei height, TextureFormat dataFormat, TextureFormatType dataType, const void* data) {
+			glTexImage2D(target, mipLevel, GLenum(internalFormat), width, height, 0, GLenum(dataFormat), GLenum(dataType), data);
+		}
+
+		// @Depricated: Use uploadData2D instead
 		void uploadData(GLint mipLevel, TextureInternalFormat internalFormat, GLsizei width, GLsizei height, TextureFormat dataFormat, TextureFormatType dataType, const void* data) {
-            glTexImage2D(target, mipLevel, GLenum(internalFormat), width, height, 0, GLenum(dataFormat), GLenum(dataType), data);
+			uploadData2D(mipLevel, internalFormat, width, height, dataFormat, dataType, data);
 		}
 
 		void uploadData3D(GLint mipLevel, TextureInternalFormat internalFormat, GLsizei width, GLsizei height, GLsizei depth, TextureFormat dataFormat, TextureFormatType dataType, const void* data) {
