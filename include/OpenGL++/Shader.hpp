@@ -51,7 +51,7 @@ bool OpenGLShaderProgram::compile(const char* src, size_t strLength, ShaderType 
 
 bool OpenGLShaderProgram::compileFile(const char* filename, ShaderType type) {
 	// open the file at the end
-	std::ifstream f(filename, std::ios::ate);
+	std::ifstream f(filename, std::ios::ate | std::ios::binary);
 
 	if (!f.is_open())
 		return false;
