@@ -87,6 +87,11 @@ class OpenGLTexture {
 			glBindTexture(GLenum(target), 0);
 		}
 
+		void release(unsigned int texNr) {
+			glActiveTexture(GL_TEXTURE0 + texNr);
+			release();
+		}
+
 		void uploadData1D(GLint mipLevel, TextureInternalFormat internalFormat, GLsizei width, TextureFormat dataFormat, TextureFormatType dataType, const void* data) {
 			glTexImage1D(target, mipLevel, GLenum(internalFormat), width, 0, GLenum(dataFormat), GLenum(dataType), data);
 		}
@@ -110,6 +115,10 @@ class OpenGLTexture {
 
 		GLuint getTexture() const {
 			return tex;
+		}
+
+		TextureTarget getTextureType() const {
+			return target;
 		}
 };
 
