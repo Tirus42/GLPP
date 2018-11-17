@@ -2,6 +2,8 @@
 
 #include "OpenGL++/GL3Types.h"
 
+#include <cassert>
+
 namespace GLPP {
 
 enum VertexUsage {
@@ -76,27 +78,59 @@ class OpenGLVertexArrayObject {
 		}
 
 		void setVertexFormat(size_t index, size_t compSize, VertexType type, bool normalized, size_t stride) {
-			glBindBuffer(GL_ARRAY_BUFFER, vbo[index]);
+			assert(index < CountArrayBuffer);
 
+			glBindBuffer(GL_ARRAY_BUFFER, vbo[index]);
 			glVertexAttribPointer(index, compSize, GLenum(type), normalized, stride, 0);
 		}
 
 		void setVertexIntegerFormat(size_t index, size_t compSize, VertexType type, size_t stride) {
-			glBindBuffer(GL_ARRAY_BUFFER, vbo[index]);
+			assert(index < CountArrayBuffer);
 
+			glBindBuffer(GL_ARRAY_BUFFER, vbo[index]);
 			glVertexAttribIPointer(index, compSize, GLenum(type), stride, 0);
 		}
 
 		void uploadVertexData(size_t index, size_t size, const void* data, VertexUsage usage) {
-			glBindBuffer(GL_ARRAY_BUFFER, vbo[index]);
+			assert(index < CountArrayBuffer);
 
+			glBindBuffer(GL_ARRAY_BUFFER, vbo[index]);
 			glBufferData(GL_ARRAY_BUFFER, size, data, GLenum(usage));
 		}
 
-		void uploadIndexData(size_t index, size_t size, const void* data, VertexUsage usage) {
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iab[index]);
+		void uploadVertexSubData(size_t index, size_t offset, size_t size, const void* data) {
+			assert(index < CountArrayBuffer);
 
+			glBindBuffer(GL_ARRAY_BUFFER, vbo[index]);
+			glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);
+		}
+
+		void downloadVertexSubData(size_t index, size_t offset, size_t size, void* targetBuffer) {
+			assert(index < CountArrayBuffer);
+
+			glBindBuffer(GL_ARRAY_BUFFER, vbo[index]);
+			glGetBufferSubData(GL_ARRAY_BUFFER, offset, size, targetBuffer);
+		}
+
+		void uploadIndexData(size_t index, size_t size, const void* data, VertexUsage usage) {
+			assert(index < CountIndexBuffer);
+
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iab[index]);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GLenum(usage));
+		}
+
+		void uploadIndexSubData(size_t index, size_t offset, size_t size, const void* data) {
+			assert(index < CountIndexBuffer);
+
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iab[index]);
+			glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, size, data);
+		}
+
+		void downloadIndexSubData(size_t index, size_t offset, size_t size, void* targetBuffer) {
+			assert(index < CountIndexBuffer);
+
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iab[index]);
+			glGetBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, size, targetBuffer);
 		}
 };
 
