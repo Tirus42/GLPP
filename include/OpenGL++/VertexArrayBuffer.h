@@ -62,7 +62,10 @@ class OpenGLVertexArrayObject {
 			glBindVertexArray(0);
 		};
 		~OpenGLVertexArrayObject() {
-			// todo
+			glDeleteBuffers(CountIndexBuffer, iab);
+			glDeleteBuffers(CountArrayBuffer, vbo);
+
+			glDeleteVertexArrays(1, &vao);
 		}
 
 		void bind() const {
