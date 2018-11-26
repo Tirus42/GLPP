@@ -28,6 +28,12 @@ enum RenderBufferStorageFormat {
 	RBSF_DEPTH32F_STENCIL8 = GL_DEPTH32F_STENCIL8,
 };
 
+enum RenderBufferBindType {
+	RBBT_DRAW = GL_DRAW_FRAMEBUFFER,
+	RBBT_READ = GL_READ_FRAMEBUFFER,
+	RBBT_READ_AND_DRAW = GL_FRAMEBUFFER
+};
+
 class OpenGLRenderBufferObject {
 	private:
 		GLuint rbo;
@@ -69,12 +75,12 @@ class OpenGLFrameBufferObject {
 			glDeleteFramebuffers(1, &fbo);
 		}
 
-		void bind() const {
-			glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		void bind(RenderBufferBindType bindMode) const {
+			glBindFramebuffer(bindMode, fbo);
 		}
 
-		void release() const {
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		void release(RenderBufferBindType bindMode) const {
+			glBindFramebuffer(bindMode, 0);
 		}
 
 		void attachTextureTarget1D(AttachmentType attachmentType, OpenGLTexture& texture, GLint mipLevel) {
