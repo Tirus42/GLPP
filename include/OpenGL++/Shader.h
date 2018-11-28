@@ -99,26 +99,44 @@ class OpenGLShader {
 			glUseProgram(0);
 		}
 
-		void setUniform(const char* name, float v0) {
+		void setUniform(const char* name, GLfloat v0) {
 			glUniform1f(glGetUniformLocation(prog, name), v0);
 		}
-		void setUniform(const char* name, float v0, float v1) {
+		void setUniform(const char* name, GLfloat v0, GLfloat v1) {
 			glUniform2f(glGetUniformLocation(prog, name), v0, v1);
 		}
-		void setUniform(const char* name, float v0, float v1, float v2) {
+		void setUniform(const char* name, GLfloat v0, GLfloat v1, GLfloat v2) {
 			glUniform3f(glGetUniformLocation(prog, name), v0, v1, v2);
 		}
-		void setUniform(const char* name, float v0, float v1, float v2, float v3) {
+		void setUniform(const char* name, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3) {
 			glUniform4f(glGetUniformLocation(prog, name), v0, v1, v2, v3);
 		}
-		void setUniformMat4(const char* name, const float* data) {
+		void setUniformMat4(const char* name, const GLfloat* data) {
 			glUniformMatrix4fv(glGetUniformLocation(prog, name), 1, GL_FALSE, data);
 		}
-		void setUniform(const char* name, int v0) {
+		void setUniform(const char* name, GLint v0) {
 			glUniform1i(glGetUniformLocation(prog, name), v0);
 		}
-		void setUniform(const char* name, int v0, int v1) {
+		void setUniform(const char* name, GLint v0, GLint v1) {
 			glUniform2i(glGetUniformLocation(prog, name), v0, v1);
+		}
+		void setUniform(const char* name, GLint v0, GLint v1, GLint v2) {
+			glUniform3i(glGetUniformLocation(prog, name), v0, v1, v2);
+		}
+		void setUniform(const char* name, GLint v0, GLint v1, GLint v2, GLint v3) {
+			glUniform4i(glGetUniformLocation(prog, name), v0, v1, v2, v3);
+		}
+		void setUniform(const char* name, GLuint v0) {
+			glUniform1ui(glGetUniformLocation(prog, name), v0);
+		}
+		void setUniform(const char* name, GLuint v0, GLuint v1) {
+			glUniform2ui(glGetUniformLocation(prog, name), v0, v1);
+		}
+		void setUniform(const char* name, GLuint v0, GLuint v1, GLuint v2) {
+			glUniform3ui(glGetUniformLocation(prog, name), v0, v1, v2);
+		}
+		void setUniform(const char* name, GLuint v0, GLuint v1, GLuint v2, GLuint v3) {
+			glUniform4ui(glGetUniformLocation(prog, name), v0, v1, v2, v3);
 		}
 
 		void swap(OpenGLShader& other) {
