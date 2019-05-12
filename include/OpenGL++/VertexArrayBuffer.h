@@ -33,7 +33,6 @@ enum VertexType {
 template <size_t CountArrayBuffer, size_t CountIndexBuffer>
 class OpenGLVertexArrayObject {
 	private:
-	public:
 		GLuint vao;
 		GLuint vbo[CountArrayBuffer];
 		GLuint iab[CountIndexBuffer];
@@ -92,6 +91,13 @@ class OpenGLVertexArrayObject {
 
 			glBindBuffer(GL_ARRAY_BUFFER, vbo[index]);
 			glVertexAttribIPointer(index, compSize, GLenum(type), stride, 0);
+		}
+
+		void setVertexBindingDivisor(size_t index, size_t divisor) {
+			assert(index < CountArrayBuffer);
+
+			glBindBuffer(GL_ARRAY_BUFFER, vbo[index]);
+			glVertexBindingDivisor(index, divisor);
 		}
 
 		void uploadVertexData(size_t index, size_t size, const void* data, VertexUsage usage) {
