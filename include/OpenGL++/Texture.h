@@ -178,6 +178,10 @@ class OpenGLTexture {
 			glTexImage1D(target, mipLevel, GLenum(internalFormat), width, 0, GLenum(dataFormat), GLenum(dataType), data);
 		}
 
+		void uploadSubData1D(GLint mipLevel, GLint xoffset, GLsizei width, TextureFormat dataFormat, TextureFormatType dataType, const void* data) {
+			glTexSubImage1D(target, mipLevel, xoffset, width, GLenum(dataFormat), GLenum(dataType), data);
+		}
+
 		void uploadData2D(GLint mipLevel, TextureInternalFormat internalFormat, GLsizei width, GLsizei height, TextureFormat dataFormat, TextureFormatType dataType, const void* data) {
 			glTexImage2D(target, mipLevel, GLenum(internalFormat), width, height, 0, GLenum(dataFormat), GLenum(dataType), data);
 		}
