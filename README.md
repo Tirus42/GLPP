@@ -3,7 +3,7 @@ GLPP - OpenGL C++ Wrapper Library
 
 What is GLPP?
 -------------
-GLPP is a simple OpenGL wrapper for better type savety and a simple object orientation while using OpenGL in C++ applications.
+GLPP aims to be a simple OpenGL wrapper for better type savety and object orientation while using OpenGL in C++ applications.
 
 What is GLPP not?
 -----------------

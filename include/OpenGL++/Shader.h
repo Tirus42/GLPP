@@ -83,7 +83,7 @@ class OpenGLShader {
 		bool compileAndLinkTransformFeedbackFiles(const char* vertexFile, const char* geomFile, const std::vector<const char*>& outputVars, TransformFeedbackOutput output);
 
 		void deleteShader() {
-			glDeleteShader(prog);
+			glDeleteProgram(prog);
 			prog = 0;
 		}
 

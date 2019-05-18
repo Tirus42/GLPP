@@ -13,6 +13,9 @@ OpenGLShaderProgram::OpenGLShaderProgram() :
 	prog(0) {}
 
 OpenGLShaderProgram::~OpenGLShaderProgram() {
+	// Note: Delete of a shader object only mark the shader for removal.
+	// As long as it is used inside a shader-program it can be used.
+	// With the detach or deletion of the shader-program this objects will be released too.
 	if (prog)
 		glDeleteShader(prog);
 }
