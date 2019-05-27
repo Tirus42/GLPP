@@ -4,3 +4,4 @@
 #include "VertexArrayBuffer.h"
 #include "Texture.h"
 #include "FrameBufferObject.h"
+#include "Query.h"
