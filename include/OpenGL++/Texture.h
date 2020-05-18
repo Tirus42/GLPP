@@ -136,7 +136,7 @@ enum TextureFormatType {
 	TFT_SHORT = GL_SHORT,
 	TFT_UNSIGNED_INT = GL_UNSIGNED_INT,
 	TFT_INT = GL_INT,
-	TFT_FLOAT = GL_FLOAT
+	TFT_FLOAT = GL_FLOAT,
 };
 
 class OpenGLTexture {
@@ -186,13 +186,29 @@ class OpenGLTexture {
 			glTexImage2D(target, mipLevel, GLenum(internalFormat), width, height, 0, GLenum(dataFormat), GLenum(dataType), data);
 		}
 
-		// @Depricated: Use uploadData2D instead
+		void uploadSubData2D(GLint mipLevel, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, TextureFormat dataFormat, TextureFormatType dataType, const void* data) {
+			glTexSubImage2D(target, mipLevel, xoffset, yoffset, width, height, GLenum(dataFormat), GLenum(dataType), data);
+		}
+
+		// @Deprecated: Use uploadData2D instead
 		void uploadData(GLint mipLevel, TextureInternalFormat internalFormat, GLsizei width, GLsizei height, TextureFormat dataFormat, TextureFormatType dataType, const void* data) {
 			uploadData2D(mipLevel, internalFormat, width, height, dataFormat, dataType, data);
 		}
 
 		void uploadData3D(GLint mipLevel, TextureInternalFormat internalFormat, GLsizei width, GLsizei height, GLsizei depth, TextureFormat dataFormat, TextureFormatType dataType, const void* data) {
 			glTexImage3D(target, mipLevel, GLenum(internalFormat), width, height, depth, 0, GLenum(dataFormat), GLenum(dataType), data);
+		}
+
+		void getAllocatedTextureSize2D(GLint mipLevel, GLint& outWidth, GLint& outHeight) {
+			glGetTexLevelParameteriv(target, mipLevel, GL_TEXTURE_WIDTH, &outWidth);
+			glGetTexLevelParameteriv(target, mipLevel, GL_TEXTURE_HEIGHT, &outHeight);
+		}
+
+		void getAllocatedTextureSize2D(GLint mipLevel, GLuint& outWidth, GLuint& outHeight) {
+			GLint& uWidth = reinterpret_cast<GLint&>(outWidth);
+			GLint& uHeight = reinterpret_cast<GLint&>(outHeight);
+
+			getAllocatedTextureSize2D(mipLevel, uWidth, uHeight);
 		}
 
 		void generateMipMaps() {
