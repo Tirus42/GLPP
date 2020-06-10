@@ -107,6 +107,11 @@ class OpenGLVertexArrayObject {
 			glBufferData(GL_ARRAY_BUFFER, size, data, GLenum(usage));
 		}
 
+		template <typename T>
+		void uploadVertexData(size_t index, const T* data, size_t length, VertexUsage usage) {
+			uploadVertexData(index, sizeof(data[0]) * length, data, usage);
+		}
+
 		void uploadVertexSubData(size_t index, size_t offset, size_t size, const void* data) {
 			assert(index < CountArrayBuffer);
 
@@ -119,6 +124,11 @@ class OpenGLVertexArrayObject {
 
 			glBindBuffer(GL_ARRAY_BUFFER, vbo[index]);
 			glGetBufferSubData(GL_ARRAY_BUFFER, offset, size, targetBuffer);
+		}
+
+		template <typename T>
+		void uploadIndexData(size_t index, const T* data, size_t length, VertexUsage usage) {
+			uploadIndexData(index, sizeof(data[0]) * length, data, usage);
 		}
 
 		void uploadIndexData(size_t index, size_t size, const void* data, VertexUsage usage) {
