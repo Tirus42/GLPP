@@ -211,6 +211,14 @@ class OpenGLTexture {
 			getAllocatedTextureSize2D(mipLevel, uWidth, uHeight);
 		}
 
+		/**
+		* Downloads the whole texture data and converts it into the specified format.
+		* Note to set the GL_PACK_ALIGNMENT properly before using this function.
+		*/
+		void downloadData(GLint mipLevel, TextureFormat dataFormat, TextureFormatType type, void* data) {
+			glGetTexImage(target, mipLevel, GLenum(dataFormat), GLenum(type), data);
+		}
+
 		void generateMipMaps() {
 			glGenerateMipmap(target);
 		}
