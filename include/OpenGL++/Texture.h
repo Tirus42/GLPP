@@ -144,16 +144,25 @@ class OpenGLTexture {
 		GLuint tex;
 		TextureTarget target;
 
-		OpenGLTexture& operator=(const OpenGLTexture&);
-		OpenGLTexture(const OpenGLTexture&);
+		OpenGLTexture& operator=(const OpenGLTexture&) = delete;
+		OpenGLTexture(const OpenGLTexture&) = delete;
 
 	public:
 		OpenGLTexture(TextureTarget target) : tex(0), target(target) {
 			glGenTextures(1, &tex);
 		}
 
+		OpenGLTexture(OpenGLTexture&& other) noexcept :
+			tex(other.tex),
+			target(other.target) {
+
+			other.tex = 0u;
+		}
+
 		~OpenGLTexture() {
-			glDeleteTextures(1, &tex);
+			if (tex) {
+				glDeleteTextures(1, &tex);
+			}
 		}
 
 		void bind() {

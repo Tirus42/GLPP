@@ -23,8 +23,12 @@ class OpenGLShaderProgram {
 	private:
 		GLuint prog;
 
+		OpenGLShaderProgram(const OpenGLShaderProgram&) = delete;
+		OpenGLShaderProgram& operator=(const OpenGLShaderProgram&) = delete;
+
 	public:
 		OpenGLShaderProgram();
+		OpenGLShaderProgram(OpenGLShaderProgram&& other);
 		~OpenGLShaderProgram();
 
 		bool compile(const char* src, ShaderType type);
@@ -61,10 +65,17 @@ class OpenGLShader {
                   std::vector<const char*> tf_param,
                   TransformFeedbackOutput output);
 
+		OpenGLShader(const OpenGLShader&) = delete;
+		OpenGLShader& operator=(const OpenGLShader&) = delete;
 
 	public:
 		OpenGLShader() :
-			prog(0) {}
+			prog(0u) {}
+
+		OpenGLShader(OpenGLShader&& other) :
+			prog(other.prog) {
+			other.prog = 0u;
+		}
 
 		~OpenGLShader() {
 			if (prog)
@@ -143,6 +154,5 @@ class OpenGLShader {
 			std::swap(prog, other.prog);
 		}
 };
-
 
 }

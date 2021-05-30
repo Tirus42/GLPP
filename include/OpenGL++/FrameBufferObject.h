@@ -38,12 +38,20 @@ class OpenGLRenderBufferObject {
 	private:
 		GLuint rbo;
 
+		OpenGLRenderBufferObject(const OpenGLRenderBufferObject&) = delete;
+		OpenGLRenderBufferObject& operator=(const OpenGLRenderBufferObject&) = delete;
+
 	public:
 		OpenGLRenderBufferObject() : rbo(0) {
 			glGenRenderbuffers(1, &rbo);
 		}
+		OpenGLRenderBufferObject(OpenGLRenderBufferObject&& other) :
+			rbo(other.rbo) {
+			other.rbo = 0u;
+		}
 		~OpenGLRenderBufferObject() {
-			glDeleteRenderbuffers(1, &rbo);
+			if (rbo)
+				glDeleteRenderbuffers(1, &rbo);
 		}
 
 		void bind() const {
@@ -67,12 +75,20 @@ class OpenGLFrameBufferObject {
 	private:
 		GLuint fbo;
 
+		OpenGLFrameBufferObject(const OpenGLFrameBufferObject&) = delete;
+		OpenGLFrameBufferObject& operator=(const OpenGLFrameBufferObject&) = delete;
+
 	public:
 		OpenGLFrameBufferObject() :fbo(0) {
 			glGenFramebuffers(1, &fbo);
 		}
+		OpenGLFrameBufferObject(OpenGLFrameBufferObject&& other) :
+			fbo(other.fbo) {
+			other.fbo = 0u;
+		}
 		~OpenGLFrameBufferObject() {
-			glDeleteFramebuffers(1, &fbo);
+			if (fbo)
+				glDeleteFramebuffers(1, &fbo);
 		}
 
 		void bind(RenderBufferBindType bindMode) const {

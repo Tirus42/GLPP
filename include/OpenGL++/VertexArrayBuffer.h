@@ -37,6 +37,9 @@ class OpenGLVertexArrayObject {
 		GLuint vbo[CountArrayBuffer];
 		GLuint iab[CountIndexBuffer];
 
+		OpenGLVertexArrayObject(const OpenGLVertexArrayObject&) = delete;
+		OpenGLVertexArrayObject& operator=(const OpenGLVertexArrayObject&) = delete;
+
 	public:
 		OpenGLVertexArrayObject() : vao(0), vbo(), iab() {
 			glGenVertexArrays(1, &vao);
@@ -60,11 +63,32 @@ class OpenGLVertexArrayObject {
 
 			glBindVertexArray(0);
 		};
-		~OpenGLVertexArrayObject() {
-			glDeleteBuffers(CountIndexBuffer, iab);
-			glDeleteBuffers(CountArrayBuffer, vbo);
 
-			glDeleteVertexArrays(1, &vao);
+		OpenGLVertexArrayObject(OpenGLVertexArrayObject&& other) :
+			vao(other.vao),
+			vbo(),
+			iab() {
+
+			other.vao = 0u;
+
+			for (size_t i = 0; i < CountArrayBuffer; ++i) {
+				vbo[i] = other.vbo[i];
+				other.vbo[i] = 0u;
+			}
+
+			for (size_t i = 0; i < CountIndexBuffer; ++i) {
+				iab[i] = other.iab[i];
+				other.iab[i] = 0u;
+			}
+		}
+
+		~OpenGLVertexArrayObject() {
+			if (vao) {
+				glDeleteBuffers(CountIndexBuffer, iab);
+				glDeleteBuffers(CountArrayBuffer, vbo);
+
+				glDeleteVertexArrays(1, &vao);
+			}
 		}
 
 		void bind() const {

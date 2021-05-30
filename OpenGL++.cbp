@@ -41,15 +41,15 @@
 			<Add directory="include" />
 		</Compiler>
 		<Unit filename="include/OpenGL++/FrameBufferObject.h" />
+		<Unit filename="include/OpenGL++/GL3Types.h" />
+		<Unit filename="include/OpenGL++/Query.h" />
 		<Unit filename="include/OpenGL++/Shader.h" />
 		<Unit filename="include/OpenGL++/Shader.hpp" />
+		<Unit filename="include/OpenGL++/Texture.h" />
 		<Unit filename="include/OpenGL++/VertexArrayBuffer.h" />
 		<Unit filename="include/OpenGL++/opengl++.h" />
 		<Unit filename="include/OpenGL++/opengl++.hpp" />
 		<Extensions>
-			<envvars />
-			<code_completion />
-			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>

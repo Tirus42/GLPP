@@ -10,7 +10,12 @@
 namespace GLPP {
 
 OpenGLShaderProgram::OpenGLShaderProgram() :
-	prog(0) {}
+	prog(0u) {}
+
+OpenGLShaderProgram::OpenGLShaderProgram(OpenGLShaderProgram&& other) :
+	prog(other.prog) {
+	other.prog = 0u;
+}
 
 OpenGLShaderProgram::~OpenGLShaderProgram() {
 	// Note: Delete of a shader object only mark the shader for removal.
