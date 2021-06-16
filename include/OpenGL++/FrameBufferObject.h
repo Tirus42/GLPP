@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OpenGL++/GL3Types.h"
+#include "OpenGL++/Texture.h"
 
 namespace GLPP {
 
