@@ -33,7 +33,7 @@ bool OpenGLShaderProgram::compile(const char* src, size_t strLength, ShaderType 
 	if (strLength > 0x7FFFFFFF)
 		throw std::runtime_error("to long shader source");
 
-	prog = glCreateShader((GLenum)type);
+	prog = glCreateShader(static_cast<GLenum>(type));
 
 	const char* strArray[1] = {src};
 	GLint lenArray[1] = { static_cast<GLint>(strLength) };
@@ -138,7 +138,7 @@ bool OpenGLShader::link(const OpenGLShaderProgram* vert,
 
 	attachShaders(vert, tessControl, tessEval, geom, 0);
 
-	glTransformFeedbackVaryings(prog, tf_param.size(), (const char**)tf_param.data(), GLenum(output));
+	glTransformFeedbackVaryings(prog, tf_param.size(), tf_param.data(), GLenum(output));
 
 	glLinkProgram(prog);
 
