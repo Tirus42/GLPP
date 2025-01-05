@@ -130,6 +130,13 @@ class OpenGLVertexArrayObject {
 			glVertexBindingDivisor(index, divisor);
 		}
 
+		void setVertexAttributeDivisor(size_t index, size_t divisor) {
+			assert(index < CountArrayBuffer);
+
+			glBindBuffer(GL_ARRAY_BUFFER, vbo[index]);
+			glVertexAttribDivisor(index, divisor);
+		}
+
 		void uploadVertexData(size_t index, size_t size, const void* data, VertexUsage usage) {
 			assert(index < CountArrayBuffer);
 
