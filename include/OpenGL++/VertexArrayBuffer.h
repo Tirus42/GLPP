@@ -48,10 +48,13 @@ class OpenGLVertexArrayObject {
 			// generate vertex arrays
 			glGenBuffers(CountArrayBuffer, vbo);
 
+			#pragma GCC diagnostic push
+			#pragma GCC diagnostic ignored "-Wtype-limits"
 			for (size_t i = 0; i < CountArrayBuffer; ++i) {
 				glBindBuffer(GL_ARRAY_BUFFER, vbo[i]);
 				glEnableVertexAttribArray(i);
 			}
+			#pragma GCC diagnostic pop
 
 			// generate index arrays
 			glGenBuffers(CountIndexBuffer, iab);
@@ -71,6 +74,8 @@ class OpenGLVertexArrayObject {
 
 			other.vao = 0u;
 
+			#pragma GCC diagnostic push
+			#pragma GCC diagnostic ignored "-Wtype-limits"
 			for (size_t i = 0; i < CountArrayBuffer; ++i) {
 				vbo[i] = other.vbo[i];
 				other.vbo[i] = 0u;
@@ -80,6 +85,7 @@ class OpenGLVertexArrayObject {
 				iab[i] = other.iab[i];
 				other.iab[i] = 0u;
 			}
+			#pragma GCC diagnostic pop
 		}
 
 		~OpenGLVertexArrayObject() {
